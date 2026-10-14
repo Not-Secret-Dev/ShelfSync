@@ -1,40 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
+import { useEffect } from "react";
+import { useRouter } from "expo-router";
+import { SplashScreen as ShelfSyncSplash } from "@/components/splash/splashScreen";
 
 export default function Index() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>ShelfSync</Text>
-      <Text style={styles.subtitle}>
-        Inventory management, wherever you work.
-      </Text>
-      <Text style={styles.status}>Your inventory workspace is coming soon.</Text>
-    </View>
-  );
-}
+  const router = useRouter();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 24,
-    backgroundColor: "#F8FAFC",
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: "700",
-    color: "#0F172A",
-    marginBottom: 12,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#475569",
-    textAlign: "center",
-    marginBottom: 24,
-  },
-  status: {
-    fontSize: 14,
-    color: "#64748B",
-    textAlign: "center",
-  },
-});
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      router.replace("/(onboarding)");
+    }, 2100);
+
+    return () => clearTimeout(timeout);
+  }, [router]);
+
+  return <ShelfSyncSplash />;
+}
