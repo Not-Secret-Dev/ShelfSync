@@ -54,7 +54,7 @@ export default function OnboardingScreen() {
 
   function handleNext() {
     if (isLastSlide) {
-      router.replace("/(auth)");
+      router.replace("/(auth)/sign-in");
       return;
     }
 
@@ -70,7 +70,7 @@ export default function OnboardingScreen() {
   }
 
   function handleSkip() {
-    router.replace("/(auth)");
+    router.replace("/(auth)/sign-in");
   }
 
   return (

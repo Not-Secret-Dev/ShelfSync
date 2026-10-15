@@ -1,4 +1,3 @@
-
 import {
   ScrollView,
   StyleSheet,
@@ -13,6 +12,7 @@ import { colors, spacing } from "../../constants/theme";
 
 type ScreenProps = {
   children: ReactNode;
+  header?: ReactNode;
   scroll?: boolean;
   padding?: number;
   edges?: Edge[];
@@ -22,6 +22,7 @@ type ScreenProps = {
 
 export function Screen({
   children,
+  header,
   scroll = false,
   padding = spacing.lg,
   edges = ["top", "left", "right"],
@@ -30,9 +31,12 @@ export function Screen({
 }: ScreenProps) {
   return (
     <SafeAreaView edges={edges} style={[styles.safeArea, style]}>
+      {header}
+
       {scroll ? (
         <ScrollView
           keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
           contentContainerStyle={[
             { padding, flexGrow: 1 },
             contentContainerStyle,

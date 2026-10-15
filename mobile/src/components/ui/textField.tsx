@@ -1,4 +1,3 @@
-
 import {
   StyleSheet,
   Text,
@@ -8,6 +7,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
+import { ReactNode } from "react";
 import { colors, radius, spacing, typography } from "../../constants/theme";
 
 type TextFieldProps = Omit<TextInputProps, "style"> & {
@@ -15,6 +15,8 @@ type TextFieldProps = Omit<TextInputProps, "style"> & {
   error?: string;
   helperText?: string;
   containerStyle?: StyleProp<ViewStyle>;
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
 };
 
 export function TextField({
@@ -22,23 +24,33 @@ export function TextField({
   error,
   helperText,
   containerStyle,
+  leftIcon,
+  rightIcon,
   ...inputProps
 }: TextFieldProps) {
   return (
     <View style={[styles.container, containerStyle]}>
       {label ? <Text style={styles.label}>{label}</Text> : null}
 
-      <TextInput
-        {...inputProps}
-        accessibilityLabel={inputProps.accessibilityLabel ?? label}
-        placeholderTextColor={colors.textMuted}
-        selectionColor={colors.focus}
+      <View
         style={[
-          styles.input,
+          styles.inputContainer,
           error ? styles.inputError : undefined,
           inputProps.editable === false ? styles.disabled : undefined,
         ]}
-      />
+      >
+        {leftIcon ? <View style={styles.leftIcon}>{leftIcon}</View> : null}
+
+        <TextInput
+          {...inputProps}
+          accessibilityLabel={inputProps.accessibilityLabel ?? label}
+          placeholderTextColor={colors.textMuted}
+          selectionColor={colors.focus}
+          style={styles.input}
+        />
+
+        {rightIcon ? <View style={styles.rightIcon}>{rightIcon}</View> : null}
+      </View>
 
       {error ? (
         <Text accessibilityRole="alert" style={styles.error}>
@@ -52,26 +64,46 @@ export function TextField({
 }
 
 const styles = StyleSheet.create({
-  container: { gap: spacing.xs },
+  container: {
+    gap: spacing.xs,
+  },
   label: {
     ...typography.label,
     color: colors.text,
   },
-  input: {
+  inputContainer: {
     minHeight: 48,
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
     borderColor: colors.borderStrong,
     borderRadius: radius.md,
+    backgroundColor: colors.surface,
+  },
+  input: {
+    flex: 1,
+    minWidth: 0,
+    minHeight: 46,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
-    backgroundColor: colors.surface,
     color: colors.text,
     ...typography.bodyMD,
   },
-  inputError: { borderColor: colors.danger },
+  leftIcon: {
+    paddingLeft: spacing.md,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  rightIcon: {
+    paddingRight: spacing.md,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputError: {
+    borderColor: colors.danger,
+  },
   disabled: {
     backgroundColor: colors.surfaceLow,
-    color: colors.textMuted,
   },
   error: {
     ...typography.bodySM,

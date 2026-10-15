@@ -11,3 +11,4 @@ export { EmptyState } from "./emptyState";
 export { LoadingState } from "./loadingState";
 export { FAB } from "./FAB";
 export { Divider } from "./divider";
+export { OfflineBanner } from "./offlineBanner";
